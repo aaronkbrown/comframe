@@ -1,5 +1,9 @@
 
 
+  // Variable that determines the total number of pages
+  // As new content pages are added, this variable should be manually updated
+  var pageCount = 4;
+
   // central element of page
   var content = document.getElementById("content");
 
@@ -26,7 +30,7 @@
   function printPage(pageVar) {
     if(pageVar === false){
       // print latest page
-      content.innerHTML = "<object type='text/html' data='content/current.html'></object>";
+      content.innerHTML = "<object type='text/html' data='content/" + pageCount + ".html'></object>";
     } else {
       // get a string value of html file we want
       var url = "content/" + pageVar + ".html";
@@ -52,7 +56,10 @@
       var pageInt = parseInt(pageNumber) + 1;
       // Truncate query string from URL
       navTo = navTo.replace(window.location.search, "");
-      navTo = navTo + "?page=" + pageInt;
+      // Set new query string to navigate to assuming next page is not latest page
+      if(pageInt < pageCount){
+        navTo = navTo + "?page=" + pageInt;
+      }
     }
     if(Modernizr.history){
       // Use HTML5 history magic
@@ -72,6 +79,11 @@
       if(pageInt - 1 > 0){
         pageInt = pageInt - 1;
       }
+      navTo = navTo.replace(window.location.search, "");
+      navTo = navTo + "?page=" + pageInt;
+    } else if(!pageNumber){
+      // In case function is called while on latest page
+      var pageInt = pageCount - 1;
       navTo = navTo.replace(window.location.search, "");
       navTo = navTo + "?page=" + pageInt;
     }
