@@ -84,8 +84,34 @@
     }
   }
 
+  function firstPage(){
+    var navTo = window.location.href;
+    navTo = navTo.replace(window.location.search, "");
+    navTo = navTo + "?page=1";
+    if(Modernizr.history){
+      history.pushState(null, null, navTo);
+      printPage(1);
+    } else {
+      window.location.assignTo(navTo);
+    }
+  }
+
+  function latestPage(){
+    var navTo = window.location.href;
+    navTo = navTo.replace(window.location.search, "");
+    if(Modernizr.history){
+      history.pushState(null, null, navTo);
+      printPage();
+    } else {
+      window.location.assignTo(navTo);
+    }
+  }
+
   printPage(pageNumber);
 
+  $("#first").click(function(){
+    firstPage();
+  });
 
   $("#prev").click(function(){
     prevPage();
@@ -93,6 +119,10 @@
 
   $("#next").click(function(){
     nextPage();
+  });
+
+  $("#latest").click(function(){
+    latestPage();
   });
 
   // Popstate event listener for back button functionality in HTML5 History API
