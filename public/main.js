@@ -55,11 +55,12 @@ function nextPage(){
   var navTo = window.location.href;
   // Truncate query string from URL
   navTo = navTo.replace(window.location.search, "");
-  //window.location.assign(navTo + "?page=" + pageInt);
+  navTo = navTo + "?page=" + pageInt;
   if(Modernizr.history){
     // Use HTML5 history magic
   } else {
     // Use older transition method
+    window.location.assign(navTo);
   }
   /**
   printPage(parseInt(pageNumber) + 1);
@@ -74,10 +75,12 @@ function prevPage(){
   }
   var navTo = window.location.href;
   navTo = navTo.replace(window.location.search, "");
+  navTo = navTo + "?page=" + pageInt;
   if(Modernizr.history){
     // Use HTML5 history magic
   } else {
     // Use older transition method
+    window.location.assign(navTo);
   }
   /**
   if(pageNumber - 1 > 0){
