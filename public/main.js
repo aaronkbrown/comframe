@@ -45,12 +45,14 @@
 
   function nextPage(){
     pageNumber = getQueryVariable("page");
-    var pageInt = parseInt(pageNumber) + 1;
     // Get current URL
     var navTo = window.location.href;
-    // Truncate query string from URL
-    navTo = navTo.replace(window.location.search, "");
-    navTo = navTo + "?page=" + pageInt;
+    if(pageNumber){
+      var pageInt = parseInt(pageNumber) + 1;
+      // Truncate query string from URL
+      navTo = navTo.replace(window.location.search, "");
+      navTo = navTo + "?page=" + pageInt;
+    }
     if(Modernizr.history){
       // Use HTML5 history magic
       history.pushState(null, null, navTo);
@@ -63,13 +65,15 @@
 
   function prevPage(){
     pageNumber = getQueryVariable("page");
-    var pageInt = parseInt(pageNumber);
-    if(pageInt - 1 > 0){
-      pageInt = pageInt - 1;
-    }
     var navTo = window.location.href;
-    navTo = navTo.replace(window.location.search, "");
-    navTo = navTo + "?page=" + pageInt;
+    if(pageNumber){
+      var pageInt = parseInt(pageNumber);
+      if(pageInt - 1 > 0){
+        pageInt = pageInt - 1;
+      }
+      navTo = navTo.replace(window.location.search, "");
+      navTo = navTo + "?page=" + pageInt;
+    }
     if(Modernizr.history){
       // Use HTML5 history magic
       history.pushState(null, null, navTo);
