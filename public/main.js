@@ -4,6 +4,11 @@
   // As new content pages are added, this variable should be manually updated
   var pageCount = 4;
 
+  // Variable for whether website should have a cover image
+  // If the latest page of content should be displayed on the front, set to false
+  // If the front page should have a cover instead, set to true
+  var hasCover = false;
+
   // central element of page
   var content = document.getElementById("content");
 
@@ -30,7 +35,11 @@
   function printPage(pageVar) {
     if(pageVar === false){
       // print latest page
-      content.innerHTML = "<object type='text/html' data='content/" + pageCount + ".html'></object>";
+      if(hasCover){
+        content.innerHTML = "<object type='text/html' data='content/cover.html'></object>";
+      } else {
+        content.innerHTML = "<object type='text/html' data='content/" + pageCount + ".html'></object>";
+      }
     } else {
       // get a string value of html file we want
       var url = "content/" + pageVar + ".html";
@@ -47,6 +56,7 @@
     }
   }
 
+  // Function for navigating to the next page in the sequence
   function nextPage(){
     pageNumber = getQueryVariable("page");
     // Get current URL
@@ -57,11 +67,17 @@
       // Truncate query string from URL
       navTo = navTo.replace(window.location.search, "");
       // Set new query string to navigate to assuming next page is not latest page
-      if(pageInt < pageCount){
-        navTo = navTo + "?page=" + pageInt;
+      if(hasCover){
+        if(pageInt <= pageCount){
+          navTo = navTo + "?page=" + pageInt;
+        }
+      } else {
+        if(pageInt < pageCount){
+          navTo = navTo + "?page=" + pageInt;
+        }
       }
     }
-    // If we're already on the latest page, calling this function again won't track in the browser history
+    // If we're already on the front page, calling this function again won't track in the browser history
     if(pageNumber){ // && parseInt(pageNumber) !== pageCount){
       if(Modernizr.history){
         // Use HTML5 history magic
@@ -74,21 +90,29 @@
     }
   }
 
+  // Navigate to previous page in sequence
   function prevPage(){
     pageNumber = getQueryVariable("page");
     var navTo = window.location.href;
+    var pageInt;
     // If we're already at page 1, calling this function again won't track in the browser history
     if(parseInt(pageNumber) !== 1){
       if(pageNumber && !isNaN(parseInt(pageNumber))){
-        var pageInt = parseInt(pageNumber);
+        pageInt = parseInt(pageNumber);
         if(pageInt - 1 > 0){
           pageInt = pageInt - 1;
         }
         navTo = navTo.replace(window.location.search, "");
         navTo = navTo + "?page=" + pageInt;
       } else if(!pageNumber){
-        // In case function is called while on latest page
-        var pageInt = pageCount - 1;
+        // In case function is called while on front page
+        if(hasCover){
+          // If hasCover is true, function takes us to latest page
+          pageInt = pageCount;
+        } else {
+          // Otherwise, function takes us to next to last page
+          pageInt = pageCount - 1;
+        }
         navTo = navTo.replace(window.location.search, "");
         navTo = navTo + "?page=" + pageInt;
       }
@@ -103,6 +127,7 @@
     }
   }
 
+  // Navigate straight to the first page in the sequence
   function firstPage(){
     pageNumber = getQueryVariable("page");
     var navTo = window.location.href;
@@ -119,14 +144,22 @@
     }
   }
 
+  // Navigate to the most current page, i.e. front landing page
   function latestPage(){
     var navTo = window.location.href;
     navTo = navTo.replace(window.location.search, "");
+    if(hasCover){
+      navTo = navTo + "?page=" + pageCount;
+    }
     // If we're already at the latest page, calling this function again won't track in the browser history
     if(navTo !== window.location.href){
       if(Modernizr.history){
         history.pushState(null, null, navTo);
-        printPage();
+        if(hasCover){
+          printPage(pageCount);
+        } else {
+          printPage();
+        }
       } else {
         window.location.assignTo(navTo);
       }
@@ -135,6 +168,7 @@
 
   printPage(pageNumber);
 
+  // Navigational click events
   $("#first").click(function(){
     firstPage();
   });
