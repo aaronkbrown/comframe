@@ -47,7 +47,8 @@
     pageNumber = getQueryVariable("page");
     // Get current URL
     var navTo = window.location.href;
-    if(pageNumber){
+    // Check that we're currently on a numbered page
+    if(pageNumber && !isNaN(parseInt(pageNumber))){
       var pageInt = parseInt(pageNumber) + 1;
       // Truncate query string from URL
       navTo = navTo.replace(window.location.search, "");
@@ -66,7 +67,7 @@
   function prevPage(){
     pageNumber = getQueryVariable("page");
     var navTo = window.location.href;
-    if(pageNumber){
+    if(pageNumber && !isNaN(parseInt(pageNumber))){
       var pageInt = parseInt(pageNumber);
       if(pageInt - 1 > 0){
         pageInt = pageInt - 1;
@@ -129,4 +130,5 @@
   window.addEventListener("popstate", function(e){
     printPage(getQueryVariable("page"));
   });
+
 
