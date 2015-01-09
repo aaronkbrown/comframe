@@ -61,62 +61,75 @@
         navTo = navTo + "?page=" + pageInt;
       }
     }
-    if(Modernizr.history){
-      // Use HTML5 history magic
-      history.pushState(null, null, navTo);
-      printPage(pageInt);
-    } else {
-      // Use older transition method as fallback
-      window.location.assign(navTo);
+    // If we're already on the latest page, calling this function again won't track in the browser history
+    if(pageNumber){ // && parseInt(pageNumber) !== pageCount){
+      if(Modernizr.history){
+        // Use HTML5 history magic
+        history.pushState(null, null, navTo);
+        printPage(pageInt);
+      } else {
+        // Use older transition method as fallback
+        window.location.assign(navTo);
+      }
     }
   }
 
   function prevPage(){
     pageNumber = getQueryVariable("page");
     var navTo = window.location.href;
-    if(pageNumber && !isNaN(parseInt(pageNumber))){
-      var pageInt = parseInt(pageNumber);
-      if(pageInt - 1 > 0){
-        pageInt = pageInt - 1;
+    // If we're already at page 1, calling this function again won't track in the browser history
+    if(parseInt(pageNumber) !== 1){
+      if(pageNumber && !isNaN(parseInt(pageNumber))){
+        var pageInt = parseInt(pageNumber);
+        if(pageInt - 1 > 0){
+          pageInt = pageInt - 1;
+        }
+        navTo = navTo.replace(window.location.search, "");
+        navTo = navTo + "?page=" + pageInt;
+      } else if(!pageNumber){
+        // In case function is called while on latest page
+        var pageInt = pageCount - 1;
+        navTo = navTo.replace(window.location.search, "");
+        navTo = navTo + "?page=" + pageInt;
       }
-      navTo = navTo.replace(window.location.search, "");
-      navTo = navTo + "?page=" + pageInt;
-    } else if(!pageNumber){
-      // In case function is called while on latest page
-      var pageInt = pageCount - 1;
-      navTo = navTo.replace(window.location.search, "");
-      navTo = navTo + "?page=" + pageInt;
-    }
-    if(Modernizr.history){
-      // Use HTML5 history magic
-      history.pushState(null, null, navTo);
-      printPage(pageInt);
-    } else {
-      // Use older transition method as fallback
-      window.location.assign(navTo);
+      if(Modernizr.history){
+        // Use HTML5 history magic
+        history.pushState(null, null, navTo);
+        printPage(pageInt);
+      } else {
+        // Use older transition method as fallback
+        window.location.assign(navTo);
+      }
     }
   }
 
   function firstPage(){
+    pageNumber = getQueryVariable("page");
     var navTo = window.location.href;
     navTo = navTo.replace(window.location.search, "");
     navTo = navTo + "?page=1";
-    if(Modernizr.history){
-      history.pushState(null, null, navTo);
-      printPage(1);
-    } else {
-      window.location.assignTo(navTo);
+    // If we're already at page 1, calling this function again won't track in the browser history
+    if(parseInt(pageNumber) !== 1){
+      if(Modernizr.history){
+        history.pushState(null, null, navTo);
+        printPage(1);
+      } else {
+        window.location.assignTo(navTo);
+      }
     }
   }
 
   function latestPage(){
     var navTo = window.location.href;
     navTo = navTo.replace(window.location.search, "");
-    if(Modernizr.history){
-      history.pushState(null, null, navTo);
-      printPage();
-    } else {
-      window.location.assignTo(navTo);
+    // If we're already at the latest page, calling this function again won't track in the browser history
+    if(navTo !== window.location.href){
+      if(Modernizr.history){
+        history.pushState(null, null, navTo);
+        printPage();
+      } else {
+        window.location.assignTo(navTo);
+      }
     }
   }
 
