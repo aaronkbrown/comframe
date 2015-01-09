@@ -50,7 +50,12 @@ function printPage(pageVar) {
 
 function nextPage(){
   pageNumber = getQueryVariable("page");
-
+  var pageInt = parseInt(pageNumber) + 1;
+  // Get current URL
+  var navTo = window.location.href;
+  // Truncate query string from URL
+  navTo = navTo.replace(window.location.search, "");
+  //window.location.assign(navTo + "?page=" + pageInt);
   if(Modernizr.history){
     // Use HTML5 history magic
   } else {
@@ -63,7 +68,12 @@ function nextPage(){
 
 function prevPage(){
   pageNumber = getQueryVariable("page");
-
+  var pageInt = parseInt(pageNumber);
+  if(pageInt - 1 > 0){
+    pageInt = pageInt - 1;
+  }
+  var navTo = window.location.href;
+  navTo = navTo.replace(window.location.search, "");
   if(Modernizr.history){
     // Use HTML5 history magic
   } else {
