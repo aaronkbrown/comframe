@@ -2,12 +2,17 @@
 
   // Variable that determines the total number of pages
   // As new content pages are added, this variable should be manually updated
-  var pageCount = 4;
+  var pageCount = 20;
 
   // Variable for whether website should have a cover image
   // If the latest page of content should be displayed on the front, set to false
   // If the front page should have a cover instead, set to true
-  var hasCover = false;
+  var hasCover = true;
+
+  var chapterBreaks = [4, 9, 13, 17];
+
+  // sort chapterBreaks[] in numeric fashion
+  chapterBreaks.sort(function(a, b){return a - b;});
 
   // central element of page
   var content = document.getElementById("content");
@@ -44,7 +49,7 @@
       // get a string value of html file we want
       var url = "content/" + pageVar + ".html";
       // AJAX get request takes content file in question and prints to page
-      // Prints error page in case requested page does not exist
+      // Fallback sends browser to front page in case requested page does not exist
       $.get(url).done(function(){
         content.innerHTML = "<object type='text/html' data=" + url + "></object>";
       }).fail(function(){
@@ -166,6 +171,43 @@
     }
   }
 
+  // return the current chapter of the current page view
+  function getCurrentChapter(){
+    pageNumber = getQueryVariable("page");
+    var currentPage = parseInt(pageNumber);
+    var chapterNumber;
+    // If our chapter pages array has values in it
+    if(chapterBreaks.length > 0){
+      // cycle through array of chapters starts, and so long as the chapter start page is less than or equal to the current page, update chapterNumber to be that chapter
+      for(var i = 0; i < chapterBreaks.length; i++){
+        var chapterPage = chapterBreaks[i];
+        if(chapterPage <= currentPage){
+          chapterNumber = i + 1;
+        }
+      }
+    // just in case we don't have chapter breaks
+    } else {
+      chapterNumber = false;
+    }
+    return chapterNumber;
+  }
+
+  function nextChapter(){
+
+  }
+
+  function prevChapter(){
+
+  }
+
+  function firstChapter(){
+
+  }
+
+  function latestChapter(){
+
+  }
+
   printPage(pageNumber);
 
   // Navigational click events
@@ -183,6 +225,10 @@
 
   $("#latest").click(function(){
     latestPage();
+  });
+
+  $("#chapter").click(function(){
+    getCurrentChapter();
   });
 
   // Popstate event listener for back button functionality in HTML5 History API
