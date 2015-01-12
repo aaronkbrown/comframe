@@ -175,20 +175,50 @@
   function getCurrentChapter(){
     pageNumber = getQueryVariable("page");
     var currentPage = parseInt(pageNumber);
-    var chapterNumber;
-    // If our chapter pages array has values in it
-    if(chapterBreaks.length > 0){
-      // cycle through array of chapters starts, and so long as the chapter start page is less than or equal to the current page, update chapterNumber to be that chapter
-      for(var i = 0; i < chapterBreaks.length; i++){
-        var chapterPage = chapterBreaks[i];
-        if(chapterPage <= currentPage){
-          chapterNumber = i + 1;
+    var chapterNumber = 0;
+    if(hasCover && currentPage){
+      // If our chapter pages array has values in it
+      if(chapterBreaks.length > 0){
+        // cycle through array of chapters starts, and so long as the chapter start page is less than or equal to the current page, update chapterNumber to be that chapter
+        for(var i = 0; i < chapterBreaks.length; i++){
+          var chapterPage = chapterBreaks[i];
+          if(chapterPage <= currentPage){
+            chapterNumber = i + 1;
+          }
         }
+      // just in case we don't have chapter breaks
+      } else {
+        chapterNumber = false;
       }
-    // just in case we don't have chapter breaks
+    // In case we are on the cover page
+    } else if(hasCover && !currentPage){
+      if(chapterBreaks.length > 0){
+        // Set chapter to one more than the current total chapter count
+        chapterNumber = chapterBreaks.length + 1;
+      } else {
+        chapterNumber = false;
+      }
+    // If we don't have a cover and we're on a page other than the front
+    } else if(!hasCover && currentPage) {
+      if(chapterBreaks.length > 0){
+        for(var i = 0; i < chapterBreaks.length; i++){
+          var chapterPage = chapterBreaks[i];
+          if(chapterPage <= currentPage){
+            chapterNumber = i + 1;
+          }
+        }
+      } else {
+        chapterNumber = false;
+      }
+    // In case we're on the front page and there is no cover, i.e. front page is the latest page of content
     } else {
-      chapterNumber = false;
+      if(chapterBreaks.length > 0){
+        chapterNumber = chapterBreaks.length;
+      } else {
+        chapterNumber = false;
+      }
     }
+    //alert("Current chapter is " + chapterNumber);
     return chapterNumber;
   }
 
@@ -229,6 +259,22 @@
 
   $("#chapter").click(function(){
     getCurrentChapter();
+  });
+
+  $("#firstchapter").click(function(){
+    firstChapter();
+  });
+
+  $("#prevchapter").click(function(){
+    prevChapter();
+  });
+
+  $("#nextchapter").click(function(){
+    nextChapter();
+  });
+
+  $("#latestchapter").click(function(){
+    latestChapter();
   });
 
   // Popstate event listener for back button functionality in HTML5 History API
