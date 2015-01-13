@@ -258,6 +258,7 @@
   function nextChapter(){
     var currentChapter = getCurrentChapter();
     var chapterCount = chapterBreaks.length;
+    // Make sure we're not already on the last chapter
     if(chapterCount > 0 && currentChapter < chapterCount){
       var toPage = chapterBreaks[currentChapter];
       goToPage(toPage);
@@ -277,6 +278,7 @@
     var currentChapter = getCurrentChapter();
     var chapterCount = chapterBreaks.length;
     pageNumber = getQueryVariable("page");
+    // Make sure we're not already on the start of the first chapter
     if(chapterCount > 0){
       var toPage = chapterBreaks[0];
       if(toPage !== parseInt(pageNumber)){
@@ -289,6 +291,7 @@
     var currentChapter = getCurrentChapter();
     var chapterCount = chapterBreaks.length;
     pageNumber = getQueryVariable("page");
+    // Make sure we're not already on the last chapter break
     if(chapterCount > 0){
       var toPage = chapterBreaks[chapterCount - 1];
       if(toPage !== parseInt(pageNumber)){
