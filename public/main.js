@@ -7,7 +7,7 @@
   // Variable for whether website should have a cover image
   // If the latest page of content should be displayed on the front, set to false
   // If the front page should have a cover instead, set to true
-  var hasCover = false;
+  var hasCover = true;
 
   var chapterBreaks = [4, 9, 13, 17];
 
@@ -255,20 +255,36 @@
     var currentChapter = getCurrentChapter();
     var chapterCount = chapterBreaks.length;
     if(chapterCount > 0 && currentChapter < chapterCount){
-      var toPage = chapterBreaks[chapterCount];
+      var toPage = chapterBreaks[currentChapter];
+      goToPage(toPage);
     }
   }
 
   function prevChapter(){
-
+    var currentChapter = getCurrentChapter();
+    var chapterCount = chapterBreaks.length;
+    if(chapterCount > 0 && currentChapter > 1){
+      var toPage = chapterBreaks[currentChapter - 2];
+      goToPage(toPage);
+    }
   }
 
   function firstChapter(){
-
+    var currentChapter = getCurrentChapter();
+    var chapterCount = chapterBreaks.length;
+    if(chapterCount > 0 && currentChapter !== 1){
+      var toPage = chapterBreaks[0];
+      goToPage(toPage);
+    }
   }
 
   function latestChapter(){
-
+    var currentChapter = getCurrentChapter();
+    var chapterCount = chapterBreaks.length;
+    if(chapterCount > 0 && currentChapter !== chapterCount){
+      var toPage = chapterBreaks[chapterCount - 1];
+      goToPage(toPage);
+    }
   }
 
   printPage(pageNumber);
