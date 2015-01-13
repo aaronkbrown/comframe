@@ -9,6 +9,9 @@
   // If the front page should have a cover instead, set to true
   var hasCover = true;
 
+  // Array that contains all the pages that begin new chapters
+  // If we do not wish to break up the content by chapters, then leave this array empty, i.e.
+  // var chapterBreaks = [];
   var chapterBreaks = [4, 9, 13, 17];
 
   // sort chapterBreaks[] in numeric fashion
@@ -247,10 +250,11 @@
         chapterNumber = false;
       }
     }
-    //alert("Current chapter is " + chapterNumber);
+    //console.log("Current chapter is " + chapterNumber);
     return chapterNumber;
   }
 
+  // Navigate by chapters
   function nextChapter(){
     var currentChapter = getCurrentChapter();
     var chapterCount = chapterBreaks.length;
@@ -272,18 +276,24 @@
   function firstChapter(){
     var currentChapter = getCurrentChapter();
     var chapterCount = chapterBreaks.length;
-    if(chapterCount > 0 && currentChapter !== 1){
+    pageNumber = getQueryVariable("page");
+    if(chapterCount > 0){
       var toPage = chapterBreaks[0];
-      goToPage(toPage);
+      if(toPage !== parseInt(pageNumber)){
+        goToPage(toPage);
+      }
     }
   }
 
   function latestChapter(){
     var currentChapter = getCurrentChapter();
     var chapterCount = chapterBreaks.length;
-    if(chapterCount > 0 && currentChapter !== chapterCount){
+    pageNumber = getQueryVariable("page");
+    if(chapterCount > 0){
       var toPage = chapterBreaks[chapterCount - 1];
-      goToPage(toPage);
+      if(toPage !== parseInt(pageNumber)){
+        goToPage(toPage);
+      }
     }
   }
 
@@ -304,10 +314,6 @@
 
   $("#latest").click(function(){
     latestPage();
-  });
-
-  $("#chapter").click(function(){
-    getCurrentChapter();
   });
 
   $("#firstchapter").click(function(){
