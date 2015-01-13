@@ -7,7 +7,7 @@
   // Variable for whether website should have a cover image
   // If the latest page of content should be displayed on the front, set to false
   // If the front page should have a cover instead, set to true
-  var hasCover = true;
+  var hasCover = false;
 
   var chapterBreaks = [4, 9, 13, 17];
 
@@ -171,6 +171,35 @@
     }
   }
 
+  // Function to go directly to a page number specified by toPage
+  function goToPage(toPage){
+    // Make sure toPage is an integer for comparing to pageCount
+    toPage = parseInt(toPage);
+    pageNumber = getQueryVariable("page");
+    var navTo = window.location.href;
+    navTo = navTo.replace(window.location.search, "");
+    if(toPage !== parseInt(pageNumber)){
+      // If there's no cover and we're going directly to the latest page, i.e. front page
+      if(!hasCover && toPage === pageCount){
+        if(Modernizr.history){
+          history.pushState(null, null, navTo);
+          printPage();
+        } else {
+          window.location.assignTo(navTo);
+        }
+      } else {
+        // all other cases
+        navTo = navTo + "?page=" + toPage;
+        if(Modernizr.history){
+          history.pushState(null, null, navTo);
+          printPage(toPage);
+        } else {
+          window.location.assignTo(navTo);
+        }
+      }
+    }
+  }
+
   // return the current chapter of the current page view
   function getCurrentChapter(){
     pageNumber = getQueryVariable("page");
@@ -223,7 +252,11 @@
   }
 
   function nextChapter(){
-
+    var currentChapter = getCurrentChapter();
+    var chapterCount = chapterBreaks.length;
+    if(chapterCount > 0 && currentChapter < chapterCount){
+      var toPage = chapterBreaks[chapterCount];
+    }
   }
 
   function prevChapter(){
