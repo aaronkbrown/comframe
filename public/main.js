@@ -14,6 +14,8 @@
   // var chapterBreaks = [];
   var chapterBreaks = [4, 9, 13, 17];
 
+  var introduction = "Introduction";
+
   // sort chapterBreaks[] in numeric fashion
   chapterBreaks.sort(function(a, b){return a - b;});
 
@@ -301,19 +303,25 @@
   }
 
   function printIndex(){
-    if(pageCount > 0){
-      if(chapterBreaks.length > 0){
-        var pageToPrint = 1;
-        if(pageToPrint < chapterBreaks[0]){
-          var introCell = document.createElement("div");
-          $(introCell).attr("id", "intro");
-          $("#contentindex").appendChild(introCell);
+    var contentIndex = document.getElementById("contentindex");
+    document.addEventListener("DOMContentLoaded", function(event){
+      alert("DOMContentLoaded");
+      if(pageCount > 0){
+        if(chapterBreaks.length > 0){
+          var pageToPrint = 1;
+          if(pageToPrint < chapterBreaks[0]){
+            var introCell = document.createElement("DIV");
+            $(introCell).attr("id", "intro");
+            contentIndex.appendChild(introCell);
+            var introHeader = document.createElement("H2");
+            introHeader.innerHTML(introduction);
+            $(introCell).appendChild(introHeader);
+          }
+        } else {
 
         }
-      } else {
-
       }
-    }
+    });
   }
 
   function goToIndex(){
