@@ -302,10 +302,12 @@
     }
   }
 
+  /**
   function printIndex(){
-    var contentIndex = document.getElementById("contentindex");
-    document.addEventListener("DOMContentLoaded", function(event){
-      alert("DOMContentLoaded");
+    //var contentIndex = document.getElementById("contentindex");
+    var contentIndex = document.getElementById("content");
+    //if(document.readyState == "interactive"){
+      //alert("DOMContentLoaded");
       if(pageCount > 0){
         if(chapterBreaks.length > 0){
           var pageToPrint = 1;
@@ -314,14 +316,16 @@
             $(introCell).attr("id", "intro");
             contentIndex.appendChild(introCell);
             var introHeader = document.createElement("H2");
-            introHeader.innerHTML(introduction);
-            $(introCell).appendChild(introHeader);
+            var headerText = document.createTextNode(introduction);
+            introHeader.appendChild(headerText);
+            introCell.appendChild(introHeader);
+            alert("Hi");
           }
         } else {
 
         }
-      }
-    });
+      //}
+    }
   }
 
   function goToIndex(){
@@ -331,6 +335,7 @@
       printIndex();
     }
   }
+  */
 
   printPage(pageNumber);
 
@@ -367,9 +372,11 @@
     latestChapter();
   });
 
+  /**
   $("#index").click(function(){
     goToIndex();
   });
+  */
 
   // Popstate event listener for back button functionality in HTML5 History API
   window.addEventListener("popstate", function(e){
