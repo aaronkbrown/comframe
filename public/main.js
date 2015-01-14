@@ -103,8 +103,8 @@
     pageNumber = getQueryVariable("page");
     var navTo = window.location.href;
     var pageInt;
-    // If we're already at page 1, calling this function again won't track in the browser history
-    if(parseInt(pageNumber) !== 1){
+    // If we're already at page 1 or index, calling this function again won't track in the browser history
+    if(parseInt(pageNumber) > 1){
       if(pageNumber && !isNaN(parseInt(pageNumber))){
         pageInt = parseInt(pageNumber);
         if(pageInt - 1 > 0){
@@ -300,6 +300,30 @@
     }
   }
 
+  function printIndex(){
+    if(pageCount > 0){
+      if(chapterBreaks.length > 0){
+        var pageToPrint = 1;
+        if(pageToPrint < chapterBreaks[0]){
+          var introCell = document.createElement("div");
+          $(introCell).attr("id", "intro");
+          $("#contentindex").appendChild(introCell);
+
+        }
+      } else {
+
+      }
+    }
+  }
+
+  function goToIndex(){
+    pageNumber = getQueryVariable("page");
+    if(parseInt(pageNumber) !== 0){
+      goToPage(0);
+      printIndex();
+    }
+  }
+
   printPage(pageNumber);
 
   // Navigational click events
@@ -333,6 +357,10 @@
 
   $("#latestchapter").click(function(){
     latestChapter();
+  });
+
+  $("#index").click(function(){
+    goToIndex();
   });
 
   // Popstate event listener for back button functionality in HTML5 History API
