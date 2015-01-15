@@ -321,23 +321,28 @@
         var pageToPrint = 1;
         // In case we have a set of introduction pages that come before the first page of the first chapter chapterBreaks[0]
         if(pageToPrint < chapterBreaks[0]){
+          // Create a block element to contain introduction page links
           var introCell = document.createElement("DIV");
           $(introCell).attr("id", "intro");
           contentIndex.appendChild(introCell);
+          // Create header for element and append to the block
           var introHeader = document.createElement("H2");
           var headerText = document.createTextNode(introduction);
           introHeader.appendChild(headerText);
           introCell.appendChild(introHeader);
+          // Add the page links
           while(pageToPrint < chapterBreaks[0]){
             var linkText = document.createTextNode("Page " + pageToPrint);
             var pLink = document.createElement("P");
             pLink.appendChild(linkText);
             introCell.appendChild(pLink);
+            // Add a class to link as a JavaScript hook and a "data-page" attribute to bind it to its own page value
+            $(pLink).addClass("pageLink");
+            $(pLink).attr("data-page", pageToPrint);
             pageToPrint++;
           }
         }
         // Cycle through each chapter and spit out the pages for each
-          
         for(i = 1; i <= chapterBreaks.length; i++){
           var chapterCell = document.createElement("DIV");
           $(chapterCell).attr("id", "chapter" + i);
@@ -346,31 +351,40 @@
           var chapterHeaderText = document.createTextNode("Chapter " + i);
           chapterHeader.appendChild(chapterHeaderText);
           chapterCell.appendChild(chapterHeader);
+          // If there are chapter break pages remaining
           if(chapterBreaks[i]){
             while(pageToPrint < chapterBreaks[i]){
               var linkText = document.createTextNode("Page " + pageToPrint);
               var pLink = document.createElement("P");
               pLink.appendChild(linkText);
               chapterCell.appendChild(pLink);
+              $(pLink).addClass("pageLink");
+              $(pLink).attr("data-page", pageToPrint);
               pageToPrint++;
             }
+          // Or if we're on the last chapter with no further breaks remaining
           } else {
             while(pageToPrint <= pageCount){
               var linkText = document.createTextNode("Page " + pageToPrint);
               var pLink = document.createElement("P");
               pLink.appendChild(linkText);
               chapterCell.appendChild(pLink);
+              $(pLink).addClass("pageLink");
+              $(pLink).attr("data-page", pageToPrint);
               pageToPrint++;
             }
           }
         }
       } else {
+        // In case we have no chapter breaks
         var pageToPrint = 1;
         while(pageToPrint <= pageCount){
           var linkText = document.createTextNode("Page " + pageToPrint);
           var pLink = document.createElement("P");
           pLink.appendChild(linkText);
           contentIndex.appendChild(pLink);
+          $(pLink).addClass("pageLink");
+          $(pLink).attr("data-page", pageToPrint);          
           pageToPrint++;
         }
       }
