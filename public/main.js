@@ -106,7 +106,7 @@
     var navTo = window.location.href;
     var pageInt;
     // If we're already at page 1 or index, calling this function again won't track in the browser history
-    if(parseInt(pageNumber) > 1){
+    if(parseInt(pageNumber) !== 1 && parseInt(pageNumber) !== 0){
       if(pageNumber && !isNaN(parseInt(pageNumber))){
         pageInt = parseInt(pageNumber);
         if(pageInt - 1 > 0){
@@ -136,6 +136,7 @@
       }
     }
   }
+  
 
   // Navigate straight to the first page in the sequence
   function firstPage(){
