@@ -130,3 +130,9 @@ p {
   font-family: opensansregular, helvetica, sans-serif;
   font-size: 1em;
   color: #c5c5c5; }
+
+.chapterblock {
+  display: none; }
+
+.chapterblock.expandchapter {
+  display: block; }

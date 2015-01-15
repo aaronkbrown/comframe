@@ -334,12 +334,12 @@
           // Give the header a class for JavaScript clicking
           $(introHeader).addClass("chapterHeader");
           // And a data attribute
-          $(introHeader).attr("data-chapter", "chapter0");
+          $(introHeader).attr("data-chapter", "chapterNumber0");
           // Create a block to contain all the links of this section
           var introBlock = document.createElement("DIV");
           introCell.appendChild(introBlock);
           // Give link block an ID
-          $(introBlock).attr("id", "chapter0");
+          $(introBlock).attr("id", "chapterNumber0");
           // And a styling class
           $(introBlock).addClass("chapterblock");
           // Add the page links
@@ -364,13 +364,18 @@
           chapterHeader.appendChild(chapterHeaderText);
           chapterCell.appendChild(chapterHeader);
           $(chapterHeader).addClass("chapterHeader");
+          $(chapterHeader).attr("data-chapter", "chapterNumber" + i);
+          var chapterBlock = document.createElement("DIV");
+          $(chapterBlock).attr("id", "chapterNumber" + i);
+          $(chapterBlock).addClass("chapterblock");
+          chapterCell.appendChild(chapterBlock);
           // If there are chapter break pages remaining
           if(chapterBreaks[i]){
             while(pageToPrint < chapterBreaks[i]){
               var linkText = document.createTextNode("Page " + pageToPrint);
               var pLink = document.createElement("P");
               pLink.appendChild(linkText);
-              chapterCell.appendChild(pLink);
+              chapterBlock.appendChild(pLink);
               $(pLink).addClass("pageLink");
               $(pLink).attr("data-page", pageToPrint);
               pageToPrint++;
@@ -381,7 +386,7 @@
               var linkText = document.createTextNode("Page " + pageToPrint);
               var pLink = document.createElement("P");
               pLink.appendChild(linkText);
-              chapterCell.appendChild(pLink);
+              chapterBlock.appendChild(pLink);
               $(pLink).addClass("pageLink");
               $(pLink).attr("data-page", pageToPrint);
               pageToPrint++;
@@ -405,7 +410,9 @@
   }
 
   function chapterExpand(headerClicked){
-
+    //alert("Clicked on " + $(headerClicked).attr("data-chapter"));
+    var chapterId = $(headerClicked).attr("data-chapter");
+    $("#" + chapterId).toggleClass("expandchapter");
   }
 
   // Take us to page 0, the index/TOC
@@ -466,7 +473,11 @@
   // Because we are binding events to classes and elements that get added dynamically
   $("#content").on("click", ".pageLink", function(){
     clickIndexLink(this);
-  });  
+  });
+
+  $("#content").on("click", ".chapterHeader", function(){
+    chapterExpand(this);
+  });
 
   // Popstate event listener for back button functionality in HTML5 History API
   window.addEventListener("popstate", function(e){
