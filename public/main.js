@@ -81,10 +81,14 @@
       if(hasCover){
         if(pageInt <= pageCount){
           navTo = navTo + "?page=" + pageInt;
+        } else {
+          pageInt = false;
         }
       } else {
         if(pageInt < pageCount){
           navTo = navTo + "?page=" + pageInt;
+        } else {
+          pageInt = false;
         }
       }
     }
@@ -170,7 +174,7 @@
         if(hasCover){
           printPage(pageCount);
         } else {
-          printPage();
+          printPage(false);
         }
       } else {
         window.location.assignTo(navTo);
