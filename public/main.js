@@ -48,9 +48,7 @@
       // print latest page
       if(hasCover){
         url = "content/cover.html";
-        //content.innerHTML = "<object type='text/html' data='content/cover.html'></object>";
       } else {
-        //content.innerHTML = "<object type='text/html' data='content/" + pageCount + ".html'></object>";
         url = "content/" + pageCount + ".html";
       }
     } else {
@@ -60,7 +58,6 @@
     // AJAX get request takes content file in question and prints to page
     // Fallback sends browser to front page in case requested page does not exist
     $.get(url).done(function(data){
-      //content.innerHTML = "<object type='text/html' data=" + url + "></object>";
       $(content).html(data);
     }).fail(function(){
       // If the page does not exist, redirect to root and remove from browser history
