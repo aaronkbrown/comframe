@@ -43,27 +43,30 @@
   // Display content of page determined by page number in query string
   // If there is no current page number, print most current page
   function printPage(pageVar) {
+    var url = "";
     if(pageVar === false){
       // print latest page
       if(hasCover){
-        content.innerHTML = "<object type='text/html' data='content/cover.html'></object>";
+        url = "content/cover.html";
+        //content.innerHTML = "<object type='text/html' data='content/cover.html'></object>";
       } else {
-        content.innerHTML = "<object type='text/html' data='content/" + pageCount + ".html'></object>";
+        //content.innerHTML = "<object type='text/html' data='content/" + pageCount + ".html'></object>";
+        url = "content/" + pageCount + ".html";
       }
     } else {
       // get a string value of html file we want
-      var url = "content/" + pageVar + ".html";
-      // AJAX get request takes content file in question and prints to page
-      // Fallback sends browser to front page in case requested page does not exist
-      $.get(url).done(function(){
-        content.innerHTML = "<object type='text/html' data=" + url + "></object>";
-      }).fail(function(){
-        // If the page does not exist, redirect to root and remove from browser history
-        var navTo = window.location.href;
-        navTo = navTo.replace(window.location.search, "");
-        window.location.replace(navTo);
-      });
+      url = "content/" + pageVar + ".html";
     }
+    // AJAX get request takes content file in question and prints to page
+    // Fallback sends browser to front page in case requested page does not exist
+    $.get(url).done(function(){
+      content.innerHTML = "<object type='text/html' data=" + url + "></object>";
+    }).fail(function(){
+      // If the page does not exist, redirect to root and remove from browser history
+      var navTo = window.location.href;
+      navTo = navTo.replace(window.location.search, "");
+      window.location.replace(navTo);
+    });
   }
 
   // Function for navigating to the next page in the sequence
