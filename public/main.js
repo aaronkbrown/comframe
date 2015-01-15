@@ -315,14 +315,14 @@
   
   function printIndex(){
     //var contentIndex = document.getElementById("contentindex");
-    var contentIndex = document.getElementById("content");
+    var contentIndex = document.getElementById("contentindex");
     if(pageCount > 0){
       if(chapterBreaks.length > 0){
         var pageToPrint = 1;
         // In case we have a set of introduction pages that come before the first page of the first chapter chapterBreaks[0]
         if(pageToPrint < chapterBreaks[0]){
           // Create a block element to contain introduction page links
-          var introCell = document.createElement("DIV");
+          var introCell = document.createElement("SECTION");
           $(introCell).attr("id", "intro");
           contentIndex.appendChild(introCell);
           // Create header for element and append to the block
@@ -344,7 +344,7 @@
         }
         // Cycle through each chapter and spit out the pages for each
         for(i = 1; i <= chapterBreaks.length; i++){
-          var chapterCell = document.createElement("DIV");
+          var chapterCell = document.createElement("SECTION");
           $(chapterCell).attr("id", "chapter" + i);
           contentIndex.appendChild(chapterCell);
           var chapterHeader = document.createElement("H2");
@@ -398,6 +398,10 @@
     }
   }
 
+  function clickIndexLink(dataLink){
+    var dataPage = $(dataLink).attr("data-page");
+  }
+
 
   printPage(pageNumber);
 
@@ -437,7 +441,11 @@
   $("#index").click(function(){
     goToIndex();
   });
-  
+
+  // Because we are binding events to classes that get added dynamically
+  $(document).on("click", ".pageLink", function(){
+    clickIndexLink(this);
+  });  
 
   // Popstate event listener for back button functionality in HTML5 History API
   window.addEventListener("popstate", function(e){
