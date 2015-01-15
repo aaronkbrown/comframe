@@ -18,7 +18,7 @@ $color-text3: $color7;
 
 // Typography
 
-$font1: opensansregular, helvetica, sans-serif;
+$font1: opensansbold, helvetica, sans-serif;
 $font2: opensansregular, helvetica, sans-serif;
 $font3: opensansregular, helvetica, sans-serif;
 
@@ -28,3 +28,11 @@ $size3: 1.2em;
 $size4: 1em;
 $size5: 0.8em;
 
+
+
+
+// Media Queries
+
+$tablet1: "only screen and (min-width: 768px) and (max-width: 959px)";
+$tablet2: "only screen and (min-width: 480px) and (max-width: 767px)";
+$mobile: "only screen and (max-width: 479px)";
