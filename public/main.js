@@ -59,6 +59,7 @@
     // Fallback sends browser to front page in case requested page does not exist
     $.get(url).done(function(data){
       $(content).html(data);
+      // Add index populating function here so that it runs after HTML is finished loading, lest we try to add elements to a document that does not yet fully exist
       if(parseInt(pageVar) === 0){
         printIndex();
       }
@@ -315,31 +316,64 @@
   function printIndex(){
     //var contentIndex = document.getElementById("contentindex");
     var contentIndex = document.getElementById("content");
-    //if(document.readyState == "interactive"){
-      //alert("DOMContentLoaded");
-      if(pageCount > 0){
-        if(chapterBreaks.length > 0){
-          var pageToPrint = 1;
-          if(pageToPrint < chapterBreaks[0]){
-            var introCell = document.createElement("DIV");
-            $(introCell).attr("id", "intro");
-            contentIndex.appendChild(introCell);
-            var introHeader = document.createElement("H2");
-            var headerText = document.createTextNode(introduction);
-            introHeader.appendChild(headerText);
-            introCell.appendChild(introHeader);
-            while(pageToPrint < chapterBreaks[0]){
+    if(pageCount > 0){
+      if(chapterBreaks.length > 0){
+        var pageToPrint = 1;
+        // In case we have a set of introduction pages that come before the first page of the first chapter chapterBreaks[0]
+        if(pageToPrint < chapterBreaks[0]){
+          var introCell = document.createElement("DIV");
+          $(introCell).attr("id", "intro");
+          contentIndex.appendChild(introCell);
+          var introHeader = document.createElement("H2");
+          var headerText = document.createTextNode(introduction);
+          introHeader.appendChild(headerText);
+          introCell.appendChild(introHeader);
+          while(pageToPrint < chapterBreaks[0]){
+            var linkText = document.createTextNode("Page " + pageToPrint);
+            var pLink = document.createElement("P");
+            pLink.appendChild(linkText);
+            introCell.appendChild(pLink);
+            pageToPrint++;
+          }
+        }
+        // Cycle through each chapter and spit out the pages for each
+          
+        for(i = 1; i <= chapterBreaks.length; i++){
+          var chapterCell = document.createElement("DIV");
+          $(chapterCell).attr("id", "chapter" + i);
+          contentIndex.appendChild(chapterCell);
+          var chapterHeader = document.createElement("H2");
+          var chapterHeaderText = document.createTextNode("Chapter " + i);
+          chapterHeader.appendChild(chapterHeaderText);
+          chapterCell.appendChild(chapterHeader);
+          if(chapterBreaks[i]){
+            while(pageToPrint < chapterBreaks[i]){
               var linkText = document.createTextNode("Page " + pageToPrint);
               var pLink = document.createElement("P");
               pLink.appendChild(linkText);
-              introCell.appendChild(pLink);
+              chapterCell.appendChild(pLink);
+              pageToPrint++;
+            }
+          } else {
+            while(pageToPrint <= pageCount){
+              var linkText = document.createTextNode("Page " + pageToPrint);
+              var pLink = document.createElement("P");
+              pLink.appendChild(linkText);
+              chapterCell.appendChild(pLink);
               pageToPrint++;
             }
           }
-        } else {
-
         }
-      //}
+      } else {
+        var pageToPrint = 1;
+        while(pageToPrint <= pageCount){
+          var linkText = document.createTextNode("Page " + pageToPrint);
+          var pLink = document.createElement("P");
+          pLink.appendChild(linkText);
+          contentIndex.appendChild(pLink);
+          pageToPrint++;
+        }
+      }
     }
   }
 
@@ -347,7 +381,6 @@
     pageNumber = getQueryVariable("page");
     if(parseInt(pageNumber) !== 0){
       goToPage(0);
-      //printIndex();
     }
   }
 
@@ -387,7 +420,6 @@
     latestChapter();
   });
 
-  
   $("#index").click(function(){
     goToIndex();
   });
