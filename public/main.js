@@ -14,6 +14,7 @@
   // var chapterBreaks = [];
   var chapterBreaks = [4, 9, 13, 17];
 
+  // The title of the introduction
   var introduction = "Introduction";
 
   // sort chapterBreaks[] in numeric fashion
@@ -312,7 +313,7 @@
     }
   }
 
-  
+  // Populate the TOC with links to each page and divide by chapter if necessary
   function printIndex(){
     //var contentIndex = document.getElementById("contentindex");
     var contentIndex = document.getElementById("contentindex");
@@ -391,6 +392,7 @@
     }
   }
 
+  // Take us to page 0, the index/TOC
   function goToIndex(){
     pageNumber = getQueryVariable("page");
     if(parseInt(pageNumber) !== 0){
@@ -398,8 +400,11 @@
     }
   }
 
+  // Take us to the page whose link we clicked on in the index
   function clickIndexLink(dataLink){
+    // Retrieve page number from data bound to link
     var dataPage = $(dataLink).attr("data-page");
+    goToPage(dataPage);
   }
 
 
@@ -442,8 +447,8 @@
     goToIndex();
   });
 
-  // Because we are binding events to classes that get added dynamically
-  $(document).on("click", ".pageLink", function(){
+  // Because we are binding events to classes and elements that get added dynamically
+  $("#content").on("click", ".pageLink", function(){
     clickIndexLink(this);
   });  
 
