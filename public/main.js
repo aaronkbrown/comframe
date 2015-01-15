@@ -59,6 +59,9 @@
     // Fallback sends browser to front page in case requested page does not exist
     $.get(url).done(function(data){
       $(content).html(data);
+      if(parseInt(pageVar) === 0){
+        printIndex();
+      }
     }).fail(function(){
       // If the page does not exist, redirect to root and remove from browser history
       var navTo = window.location.href;
@@ -308,7 +311,7 @@
     }
   }
 
-  /**
+  
   function printIndex(){
     //var contentIndex = document.getElementById("contentindex");
     var contentIndex = document.getElementById("content");
@@ -325,7 +328,13 @@
             var headerText = document.createTextNode(introduction);
             introHeader.appendChild(headerText);
             introCell.appendChild(introHeader);
-            alert("Hi");
+            while(pageToPrint < chapterBreaks[0]){
+              var linkText = document.createTextNode("Page " + pageToPrint);
+              var pLink = document.createElement("P");
+              pLink.appendChild(linkText);
+              introCell.appendChild(pLink);
+              pageToPrint++;
+            }
           }
         } else {
 
@@ -338,10 +347,10 @@
     pageNumber = getQueryVariable("page");
     if(parseInt(pageNumber) !== 0){
       goToPage(0);
-      printIndex();
+      //printIndex();
     }
   }
-  */
+
 
   printPage(pageNumber);
 
@@ -378,11 +387,11 @@
     latestChapter();
   });
 
-  /**
+  
   $("#index").click(function(){
     goToIndex();
   });
-  */
+  
 
   // Popstate event listener for back button functionality in HTML5 History API
   window.addEventListener("popstate", function(e){

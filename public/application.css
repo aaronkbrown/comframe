@@ -121,6 +121,11 @@ h1 {
   font-size: 1.8em;
   color: white; }
 
+h2 {
+  font-family: opensansregular, helvetica, sans-serif;
+  font-size: 1.5em;
+  color: #c5c5c5; }
+
 p {
   font-family: opensansregular, helvetica, sans-serif;
   font-size: 1em;
