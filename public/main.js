@@ -331,12 +331,23 @@
           var headerText = document.createTextNode(introduction);
           introHeader.appendChild(headerText);
           introCell.appendChild(introHeader);
+          // Give the header a class for JavaScript clicking
+          $(introHeader).addClass("chapterHeader");
+          // And a data attribute
+          $(introHeader).attr("data-chapter", "chapter0");
+          // Create a block to contain all the links of this section
+          var introBlock = document.createElement("DIV");
+          introCell.appendChild(introBlock);
+          // Give link block an ID
+          $(introBlock).attr("id", "chapter0");
+          // And a styling class
+          $(introBlock).addClass("chapterblock");
           // Add the page links
           while(pageToPrint < chapterBreaks[0]){
             var linkText = document.createTextNode("Page " + pageToPrint);
             var pLink = document.createElement("P");
             pLink.appendChild(linkText);
-            introCell.appendChild(pLink);
+            introBlock.appendChild(pLink);
             // Add a class to link as a JavaScript hook and a "data-page" attribute to bind it to its own page value
             $(pLink).addClass("pageLink");
             $(pLink).attr("data-page", pageToPrint);
@@ -352,6 +363,7 @@
           var chapterHeaderText = document.createTextNode("Chapter " + i);
           chapterHeader.appendChild(chapterHeaderText);
           chapterCell.appendChild(chapterHeader);
+          $(chapterHeader).addClass("chapterHeader");
           // If there are chapter break pages remaining
           if(chapterBreaks[i]){
             while(pageToPrint < chapterBreaks[i]){
@@ -390,6 +402,10 @@
         }
       }
     }
+  }
+
+  function chapterExpand(headerClicked){
+
   }
 
   // Take us to page 0, the index/TOC
