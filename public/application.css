@@ -101,6 +101,9 @@ mark {
   font-style: italic;
   font-weight: bold; }
 
+html, body {
+  min-height: 100%; }
+
 body {
   background-color: #404040; }
 
@@ -133,6 +136,3 @@ p {
 
 .chapterblock {
   display: none; }
-
-.chapterblock.expandchapter {
-  display: block; }

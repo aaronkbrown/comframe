@@ -221,7 +221,7 @@
     pageNumber = getQueryVariable("page");
     var currentPage = parseInt(pageNumber);
     var chapterNumber = 0;
-    if(hasCover && currentPage){
+    if(hasCover && currentPage >= 0){
       // If our chapter pages array has values in it
       if(chapterBreaks.length > 0){
         // cycle through array of chapters starts, and so long as the chapter start page is less than or equal to the current page, update chapterNumber to be that chapter
@@ -412,7 +412,7 @@
   function chapterExpand(headerClicked){
     //alert("Clicked on " + $(headerClicked).attr("data-chapter"));
     var chapterId = $(headerClicked).attr("data-chapter");
-    $("#" + chapterId).toggleClass("expandchapter");
+    $("#" + chapterId).toggle(300);
   }
 
   // Take us to page 0, the index/TOC
