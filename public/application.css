@@ -129,10 +129,24 @@ h2 {
   font-size: 1.5em;
   color: #c5c5c5; }
 
-p {
+p, a {
   font-family: opensansregular, helvetica, sans-serif;
-  font-size: 1em;
+  font-size: 1em; }
+
+p {
   color: #c5c5c5; }
+
+a {
+  color: #a0a0ff;
+  text-decoration: none; }
 
 .chapterblock {
   display: none; }
+
+.chapterHeader:hover {
+  cursor: pointer;
+  color: #a0a0ff;
+  transition: color 0.4s; }
+
+.pageLink {
+  display: block; }

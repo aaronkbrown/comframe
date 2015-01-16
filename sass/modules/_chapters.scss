@@ -1,3 +1,13 @@
 .chapterblock {
   display: none;
 }
+
+.chapterHeader:hover {
+  cursor: pointer;
+  color: $color-text3;
+  transition: color 0.4s;
+}
+
+.pageLink {
+  display: block;
+}

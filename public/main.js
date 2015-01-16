@@ -345,11 +345,13 @@
           // Add the page links
           while(pageToPrint < chapterBreaks[0]){
             var linkText = document.createTextNode("Page " + pageToPrint);
-            var pLink = document.createElement("P");
+            var pLink = document.createElement("A");
             pLink.appendChild(linkText);
             introBlock.appendChild(pLink);
-            // Add a class to link as a JavaScript hook and a "data-page" attribute to bind it to its own page value
+            // Add a class to link as a JavaScript hook and a "data-page" attribute to bind it to its own page value; also add a class for click capturing
             $(pLink).addClass("pageLink");
+            $(pLink).addClass("navigation");
+            $(pLink).attr("href", "");
             $(pLink).attr("data-page", pageToPrint);
             pageToPrint++;
           }
@@ -373,10 +375,12 @@
           if(chapterBreaks[i]){
             while(pageToPrint < chapterBreaks[i]){
               var linkText = document.createTextNode("Page " + pageToPrint);
-              var pLink = document.createElement("P");
+              var pLink = document.createElement("A");
               pLink.appendChild(linkText);
               chapterBlock.appendChild(pLink);
               $(pLink).addClass("pageLink");
+              $(pLink).addClass("navigation");
+              $(pLink).attr("href", "");
               $(pLink).attr("data-page", pageToPrint);
               pageToPrint++;
             }
@@ -384,10 +388,12 @@
           } else {
             while(pageToPrint <= pageCount){
               var linkText = document.createTextNode("Page " + pageToPrint);
-              var pLink = document.createElement("P");
+              var pLink = document.createElement("A");
               pLink.appendChild(linkText);
               chapterBlock.appendChild(pLink);
               $(pLink).addClass("pageLink");
+              $(pLink).addClass("navigation");
+              $(pLink).attr("href", "");
               $(pLink).attr("data-page", pageToPrint);
               pageToPrint++;
             }
@@ -429,7 +435,6 @@
     var dataPage = $(dataLink).attr("data-page");
     goToPage(dataPage);
   }
-
 
   printPage(pageNumber);
 
@@ -477,6 +482,10 @@
 
   $("#content").on("click", ".chapterHeader", function(){
     chapterExpand(this);
+  });
+
+  $(document).on("click", ".navigation", function(event){
+    event.preventDefault();
   });
 
   // Popstate event listener for back button functionality in HTML5 History API

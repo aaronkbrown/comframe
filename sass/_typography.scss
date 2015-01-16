@@ -34,9 +34,17 @@ h2 {
   color: $color-text2;
 }
 
-p {
+p, a {
   font-family: $font2;
   font-size: $size4;
+}
+
+p {
   color: $color-text2;
+}
+
+a {
+  color: $color-text3;
+  text-decoration: none;
 }
 
