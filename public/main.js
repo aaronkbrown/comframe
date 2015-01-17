@@ -346,6 +346,8 @@
           $(introBlock).attr("id", "chapterNumber0");
           // And a styling class
           $(introBlock).addClass("chapterblock");
+          // ARIA role
+          $(introBlock).attr("role", "group");
           // Add the page links
           while(pageToPrint < chapterBreaks[0]){
             var linkText = document.createTextNode("Page " + pageToPrint);
@@ -357,6 +359,7 @@
             $(pLink).addClass("navigation");
             $(pLink).attr("href", "");
             $(pLink).attr("data-page", pageToPrint);
+            $(pLink).attr("role", "treeitem");
             pageToPrint++;
           }
         }
@@ -380,6 +383,7 @@
           $(chapterBlock).attr("id", "chapterNumber" + i);
           $(chapterBlock).addClass("chapterblock");
           chapterCell.appendChild(chapterBlock);
+          $(chapterBlock).attr("role", "group");
           // If there are chapter break pages remaining
           if(chapterBreaks[i]){
             while(pageToPrint < chapterBreaks[i]){
@@ -391,6 +395,7 @@
               $(pLink).addClass("navigation");
               $(pLink).attr("href", "");
               $(pLink).attr("data-page", pageToPrint);
+              $(pLink).attr("role", "treeitem");
               pageToPrint++;
             }
           // Or if we're on the last chapter with no further breaks remaining
@@ -404,6 +409,7 @@
               $(pLink).addClass("navigation");
               $(pLink).attr("href", "");
               $(pLink).attr("data-page", pageToPrint);
+              $(pLink).attr("role", "treeitem");
               pageToPrint++;
             }
           }

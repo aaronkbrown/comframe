@@ -156,4 +156,5 @@ a {
   transition: color 0.4s; }
 
 .pageLink {
-  display: block; }
+  display: inline-block;
+  min-width: 10%; }
