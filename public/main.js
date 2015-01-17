@@ -327,14 +327,18 @@
           $(introCell).attr("id", "intro");
           contentIndex.appendChild(introCell);
           // Create header for element and append to the block
-          var introHeader = document.createElement("H2");
+          //var introHeader = document.createElement("H2");
           var headerText = document.createTextNode(introduction);
-          introHeader.appendChild(headerText);
-          introCell.appendChild(introHeader);
+          var headerButton = document.createElement("BUTTON");
+          introCell.appendChild(headerButton);
+          //$(headerButton).addClass("chapterButton");
+          //introHeader.appendChild(headerText);
+          //headerButton.appendChild(introHeader);
+          headerButton.appendChild(headerText);
           // Give the header a class for JavaScript clicking
-          $(introHeader).addClass("chapterHeader");
+          $(headerButton).addClass("chapterHeader");
           // And a data attribute
-          $(introHeader).attr("data-chapter", "chapterNumber0");
+          $(headerButton).attr("data-chapter", "chapterNumber0");
           // Create a block to contain all the links of this section
           var introBlock = document.createElement("DIV");
           introCell.appendChild(introBlock);
@@ -361,12 +365,17 @@
           var chapterCell = document.createElement("SECTION");
           $(chapterCell).attr("id", "chapter" + i);
           contentIndex.appendChild(chapterCell);
-          var chapterHeader = document.createElement("H2");
+          //var chapterHeader = document.createElement("H2");
           var chapterHeaderText = document.createTextNode("Chapter " + i);
-          chapterHeader.appendChild(chapterHeaderText);
-          chapterCell.appendChild(chapterHeader);
-          $(chapterHeader).addClass("chapterHeader");
-          $(chapterHeader).attr("data-chapter", "chapterNumber" + i);
+          var headerButton = document.createElement("BUTTON");
+          //chapterHeader.appendChild(chapterHeaderText);
+          //chapterCell.appendChild(chapterHeader);
+          chapterCell.appendChild(headerButton);
+          headerButton.appendChild(chapterHeaderText);
+          $(headerButton).addClass("chapterHeader");
+          //$(headerButton).addClass("chapterButton");
+          //$(chapterHeader).addClass("chapterHeader");
+          $(headerButton).attr("data-chapter", "chapterNumber" + i);
           var chapterBlock = document.createElement("DIV");
           $(chapterBlock).attr("id", "chapterNumber" + i);
           $(chapterBlock).addClass("chapterblock");

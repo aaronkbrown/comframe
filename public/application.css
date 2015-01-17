@@ -143,9 +143,16 @@ a {
 .chapterblock {
   display: none; }
 
-.chapterHeader:hover {
+.chapterHeader {
+  background: none;
+  font-family: opensansregular, helvetica, sans-serif;
+  font-size: 1.5em;
+  color: #c5c5c5; }
+
+.chapterHeader:hover, .chapterHeader:active, .chapterHeader:focus {
   cursor: pointer;
   color: #a0a0ff;
+  outline: 0;
   transition: color 0.4s; }
 
 .pageLink {
