@@ -522,6 +522,11 @@
     event.preventDefault();
   });
 
+  // Hide chapter navigation if there are no chapter breaks
+  if(chapterBreaks.length === 0){
+    $("#chapterNav").addClass("nochapters");
+  }
+
   // Popstate event listener for back button functionality in HTML5 History API
   window.addEventListener("popstate", function(e){
     printPage(getQueryVariable("page"));

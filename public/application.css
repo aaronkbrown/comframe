@@ -158,3 +158,6 @@ a {
 .pageLink {
   display: inline-block;
   min-width: 10%; }
+
+.nochapters {
+  display: none; }
