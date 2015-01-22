@@ -313,6 +313,21 @@
     }
   }
 
+  // Function to return to front page
+  function goToFront(){
+    pageNumber = getQueryVariable("page");
+    if(pageNumber){
+      var navTo = window.location.href;
+      navTo = navTo.replace(window.location.search, "");
+      if(Modernizr.history){
+        history.pushState(null, null, navTo);
+        printPage(false);
+      } else {
+        window.location.assignTo(navTo);
+      }
+    }
+  }
+
   // Populate the TOC with links to each page and divide by chapter if necessary
   function printIndex(){
     //var contentIndex = document.getElementById("contentindex");
@@ -488,6 +503,10 @@
 
   $("#index").click(function(){
     goToIndex();
+  });
+
+  $("#frontpage").click(function(){
+    goToFront();
   });
 
   // Because we are binding events to classes and elements that get added dynamically
