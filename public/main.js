@@ -434,10 +434,12 @@
         var pageToPrint = 1;
         while(pageToPrint <= pageCount){
           var linkText = document.createTextNode("Page " + pageToPrint);
-          var pLink = document.createElement("P");
+          var pLink = document.createElement("A");
           pLink.appendChild(linkText);
           contentIndex.appendChild(pLink);
           $(pLink).addClass("pageLink");
+          $(pLink).addClass("navigation");
+          $(pLink).attr("href", "");
           $(pLink).attr("data-page", pageToPrint);          
           pageToPrint++;
         }
