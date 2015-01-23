@@ -1,22 +1,30 @@
 
 
-  // Variable that determines the total number of pages
-  // As new content pages are added, this variable should be manually updated
-  var pageCount = 20;
+// Variable that determines the total number of pages
+// As new content pages are added, this variable should be manually updated
+var pageCount = 1; // 20;
 
-  // Variable for whether website should have a cover image
-  // If the latest page of content should be displayed on the front, set to false
-  // If the front page should have a cover instead, set to true
-  var hasCover = true;
+// Variable for whether website should have a cover image
+// If the latest page of content should be displayed on the front, set to false
+// If the front page should have a cover instead, set to true
+var hasCover = false; // true;
 
-  // Array that contains all the pages that begin new chapters
-  // If we do not wish to break up the content by chapters, then leave this array empty, i.e.
-  // var chapterBreaks = [];
-  var chapterBreaks = [4, 9, 13, 17];
+// Array that contains all the pages that begin new chapters
+// If we do not wish to break up the content by chapters, then leave this array empty, i.e.
+// var chapterBreaks = [];
+var chapterBreaks = []; // [4, 9, 13, 17];
 
-  // The title of the introduction
-  var introduction = "Introduction";
+// The title of the introduction
+var introduction = "Introduction";
 
+$.getJSON("main.json", function(data){
+  pageCount = data.pageCount;
+  hasCover = data.hasCover;
+  chapterBreaks = data.chapterBreaks;
+  introduction = data.introduction;
+}).done(function(){
+
+    alert("hasCover " + hasCover);
   // sort chapterBreaks[] in numeric fashion
   chapterBreaks.sort(function(a, b){return a - b;});
 
@@ -533,5 +541,5 @@
   window.addEventListener("popstate", function(e){
     printPage(getQueryVariable("page"));
   });
-
+});
 
