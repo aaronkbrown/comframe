@@ -1,12 +1,26 @@
 
 
+/**
+This file contains information about the content of the website
+When adding new pages or chapter breaks, this file should be updated instead of the JavaScript file to maintain a cleaner separation of data and functionality
+
+pageCount should be the total number of pages of content and should be the same number as the highest number page of content, e.g. a site with 20 pages of content (not counting the Table of Contents) should have pageCount set to 20
+
+hasCover should tell us if we are using the optional cover.html file for the front page; if hasCover is set to false, then going to the front page (no query string in the URL) should display the highest page of content instead of the cover.html, e.g. setting this to false and having a pageCount of 20 means navigating to the front page shows us page 20
+
+chapterBreaks is an array of page numbers that start new chapters; if we have chapterBreaks set to [6, 12, 17] then we will have chapter 1 begin at page 6, chapter 2 start at page 12, and chapter 3 start at page 17 with pages 1 through 5 defaulting to the introduction section in the Table of Contents. If no chapter breaks are desired in the content, then set the array to empty, i.e. "chapterBreaks": [],
+
+introduction is the title of the introductory section in the Table of Contents in case we have chapter 1 start on a higher page than 1, e.g. if we have "chapterBreaks": [6, 12, 17], and "introduction": "About the Author" then in the Table of Contents pages 1 through 5 will be under the header About the Author
+*/
+
+
 // Variable that determines the total number of pages
-// As new content pages are added, this variable should be manually updated
+// As new content pages are added, this variable should be manually updated in the JSON file
 var pageCount = 1; // 20;
 
 // Variable for whether website should have a cover image
 // If the latest page of content should be displayed on the front, set to false
-// If the front page should have a cover instead, set to true
+// If the front page should have a cover instead, set to true in the JSON file
 var hasCover = false; // true;
 
 // Array that contains all the pages that begin new chapters
@@ -17,6 +31,7 @@ var chapterBreaks = []; // [4, 9, 13, 17];
 // The title of the introduction
 var introduction = "Introduction";
 
+// Retrieve information from JSON file pertaining to page count, cover information, and chapter breaks
 $.getJSON("main.json", function(data){
   pageCount = data.pageCount;
   hasCover = data.hasCover;
@@ -24,7 +39,6 @@ $.getJSON("main.json", function(data){
   introduction = data.introduction;
 }).done(function(){
 
-    alert("hasCover " + hasCover);
   // sort chapterBreaks[] in numeric fashion
   chapterBreaks.sort(function(a, b){return a - b;});
 
