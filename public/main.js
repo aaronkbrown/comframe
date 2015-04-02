@@ -1,8 +1,8 @@
 
 
 /**
-This file contains information about the content of the website
-When adding new pages or chapter breaks, this file should be updated instead of the JavaScript file to maintain a cleaner separation of data and functionality
+The main.json file contains information about the content of the website
+When adding new pages or chapter breaks, main.json should be updated instead of this JavaScript file to maintain a cleaner separation of data and functionality
 
 pageCount should be the total number of pages of content and should be the same number as the highest number page of content, e.g. a site with 20 pages of content (not counting the Table of Contents) should have pageCount set to 20
 
