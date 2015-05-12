@@ -26,7 +26,7 @@ var hasCover = false; // true;
 // Array that contains all the pages that begin new chapters
 // If we do not wish to break up the content by chapters, then leave this array empty, i.e.
 // var chapterBreaks = [];
-var chapterBreaks = []; // [4, 9, 13, 17];
+var chapterBreaks = [];
 
 // The title of the introduction
 var introduction = "Introduction";
@@ -120,7 +120,7 @@ $.getJSON("main.json", function(data){
       }
     }
     // If we're already on the front page, calling this function again won't track in the browser history
-    if(pageNumber){ // && parseInt(pageNumber) !== pageCount){
+    if(pageNumber){
       if(Modernizr.history){
         // Use HTML5 history magic
         history.pushState(null, null, navTo);
@@ -352,7 +352,6 @@ $.getJSON("main.json", function(data){
 
   // Populate the TOC with links to each page and divide by chapter if necessary
   function printIndex(){
-    //var contentIndex = document.getElementById("contentindex");
     var contentIndex = document.getElementById("contentindex");
     if(pageCount > 0){
       if(chapterBreaks.length > 0){
@@ -364,13 +363,9 @@ $.getJSON("main.json", function(data){
           $(introCell).attr("id", "intro");
           contentIndex.appendChild(introCell);
           // Create header for element and append to the block
-          //var introHeader = document.createElement("H2");
           var headerText = document.createTextNode(introduction);
           var headerButton = document.createElement("BUTTON");
           introCell.appendChild(headerButton);
-          //$(headerButton).addClass("chapterButton");
-          //introHeader.appendChild(headerText);
-          //headerButton.appendChild(introHeader);
           headerButton.appendChild(headerText);
           // Give the header a class for JavaScript clicking
           $(headerButton).addClass("chapterHeader");
@@ -405,16 +400,11 @@ $.getJSON("main.json", function(data){
           var chapterCell = document.createElement("SECTION");
           $(chapterCell).attr("id", "chapter" + i);
           contentIndex.appendChild(chapterCell);
-          //var chapterHeader = document.createElement("H2");
           var chapterHeaderText = document.createTextNode("Chapter " + i);
           var headerButton = document.createElement("BUTTON");
-          //chapterHeader.appendChild(chapterHeaderText);
-          //chapterCell.appendChild(chapterHeader);
           chapterCell.appendChild(headerButton);
           headerButton.appendChild(chapterHeaderText);
           $(headerButton).addClass("chapterHeader");
-          //$(headerButton).addClass("chapterButton");
-          //$(chapterHeader).addClass("chapterHeader");
           $(headerButton).attr("data-chapter", "chapterNumber" + i);
           var chapterBlock = document.createElement("DIV");
           $(chapterBlock).attr("id", "chapterNumber" + i);
@@ -470,7 +460,6 @@ $.getJSON("main.json", function(data){
   }
 
   function chapterExpand(headerClicked){
-    //alert("Clicked on " + $(headerClicked).attr("data-chapter"));
     var chapterId = $(headerClicked).attr("data-chapter");
     $("#" + chapterId).toggle(300);
   }
